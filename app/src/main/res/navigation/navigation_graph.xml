@@ -12,7 +12,8 @@
         <action
             android:id="@+id/action_splashFragment_to_placesFragment"
             app:destination="@id/placesFragment"
-            app:popUpTo="@id/placesFragment"
+            app:launchSingleTop="false"
+            app:popUpTo="@id/splashFragment"
             app:popUpToInclusive="true" />
     </fragment>
     <fragment

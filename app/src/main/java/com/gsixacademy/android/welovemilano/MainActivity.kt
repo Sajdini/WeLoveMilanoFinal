@@ -7,6 +7,8 @@ import android.os.Bundle
 import android.view.View
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import com.google.firebase.database.*
+import com.gsixacademy.android.welovemilano.firebaseModel.PictureListModel
 import com.gsixacademy.android.welovemilano.models.MilanoListResponse
 import com.gsixacademy.android.welovemilano.models.Restaurant
 import com.gsixacademy.android.welovemilano.models.RestaurantData
@@ -17,14 +19,32 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var navController: NavController
     lateinit var navListener: NavController.OnDestinationChangedListener
-    var milanoListResponse:MilanoListResponse?=null
+    var pictureListModel:PictureListModel?=null
+    lateinit var database: DatabaseReference
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        database= FirebaseDatabase.getInstance().reference
         navController = Navigation.findNavController(this, R.id.navigation_host_fragment)
         initListeners()
+        initialiseFireBaseDatabase()
     }
-fun initListeners(){
+
+    fun initialiseFireBaseDatabase(){
+        val postListener=object : ValueEventListener {
+            override fun onCancelled(error: DatabaseError) {
+                //no implementation yet
+            }
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                pictureListModel=snapshot.getValue(PictureListModel::class.java)
+            }
+
+        }
+        database.addValueEventListener(postListener)
+    }
+
+    fun initListeners(){
     navListener=NavController.OnDestinationChangedListener{controller, destination, arguments ->
         when(destination.id){
             R.id.placesFragment->{navigation_bottom_view.visibility= View.VISIBLE
@@ -36,6 +56,7 @@ fun initListeners(){
             navigation_bottom_view.setSelectedTab(3)}
             R.id.infoFragment->{ navigation_bottom_view.visibility= View.VISIBLE
             navigation_bottom_view.setSelectedTab(4)}
+            R.id.splashFragment->{navigation_bottom_view.visibility=View.GONE}
         }
     }
     navController.addOnDestinationChangedListener(navListener)

@@ -6,7 +6,11 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/background_images"
+        android:scaleType="centerCrop"/>
 
     <TextView
         android:id="@+id/text_view_title"
@@ -29,5 +33,7 @@
         app:layout_constraintRight_toRightOf="parent"
         android:layout_margin="20dp"
         android:src="@drawable/icon_arrow_right"/>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

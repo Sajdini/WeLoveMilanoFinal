@@ -64,5 +64,5 @@ dependencies {
     implementation 'com.google.firebase:firebase-storage:19.2.0'
     implementation 'com.google.firebase:firebase-database:19.5.1'
 
-    'com.google.firebase:firebase-bom:26.0.0'
+
 }
